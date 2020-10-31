@@ -1,4 +1,6 @@
-# Todo list ¯\_(ツ)\_/
+# smart-world-academy_todo-list
+
+Todo list ¯\_(ツ)\_/
 
 ## Project setup
 
