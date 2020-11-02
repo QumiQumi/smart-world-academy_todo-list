@@ -13,5 +13,27 @@ const firebaseConfig = {
 };
 
 export const db = firebase.initializeApp(firebaseConfig).firestore();
-export const listsCollection = db.collection("lists");
-export const todosCollection = db.collection("todos");
+export const API = {
+	getLists: () => {
+		let lists = [];
+		db.collection("Lists")
+			.orderBy("title")
+			.get()
+			.then((snapshot) => {
+				let lists = [];
+
+				console.log(snapshot);
+				snapshot.forEach((doc) => {
+					lists.push({ id: doc.id, title: doc.data().title });
+				});
+			});
+
+		console.log(lists);
+		return lists;
+	},
+	deleteList: (id) => {
+		db.collection("Lists")
+			.doc(id)
+			.delete();
+	},
+};

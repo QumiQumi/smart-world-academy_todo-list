@@ -4,7 +4,11 @@
 
 	&__list {
 		width: 100%;
+		overflow: auto;
 	}
 	&__footer {
+	}
+	&__delete-icon:hover {
+		color: gray;
 	}
 }
