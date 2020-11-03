@@ -24,10 +24,6 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		setLists: (state) => {
-			// API.getLists();
-			// state.lists = lists;
-			// console.log(state.lists);
-
 			let lists = [];
 
 			db.collection("Lists")

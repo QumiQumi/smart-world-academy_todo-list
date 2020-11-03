@@ -12,8 +12,8 @@
 					em "{{$store.state.itemToDelete.title}}"
 					| ?
 				.modal-footer
-					button.btn.btn-secondary(type='button' data-dismiss='modal') Закрыть
-					button.btn.btn-primary(type='button' @click="onCancel($store.state.itemToDelete.id)") Удалить
+					button.btn.btn-secondary(type='button' data-dismiss='modal') Отменить
+					button.btn.btn-danger(type='button' @click="onConfirm($store.state.itemToDelete.id)") Удалить
 </template>
 
 <script>
@@ -23,7 +23,7 @@ import { API } from "../../firebase";
 export default {
 	name: "deleteModal",
 	methods: {
-		onCancel(id) {
+		onConfirm(id) {
 			API.deleteList(id);
 
 			$("#deleteModal").modal("hide");

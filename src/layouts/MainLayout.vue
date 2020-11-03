@@ -5,18 +5,21 @@
 				Menu
 			.col-8
 				router-view
-			DeleteModal
+			ModalDelete
+			ModalAdd
 		
 </template>
 <script>
 import Menu from "@/components/Menu/Menu";
-import DeleteModal from "@/components/Modal/Modal";
+import ModalDelete from "@/components/Modal/ModalDelete";
+import ModalAdd from "@/components/Modal/ModalAdd";
 
 export default {
 	name: "main-layout",
 	components: {
 		Menu,
-		DeleteModal,
+		ModalDelete,
+		ModalAdd,
 	},
 };
 </script>

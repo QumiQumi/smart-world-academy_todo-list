@@ -20,8 +20,6 @@ export const API = {
 			.orderBy("title")
 			.get()
 			.then((snapshot) => {
-				let lists = [];
-
 				console.log(snapshot);
 				snapshot.forEach((doc) => {
 					lists.push({ id: doc.id, title: doc.data().title });
@@ -32,8 +30,21 @@ export const API = {
 		return lists;
 	},
 	deleteList: (id) => {
-		db.collection("Lists")
-			.doc(id)
-			.delete();
+		if (id) {
+			db.collection("Lists")
+				.doc(id)
+				.delete()
+				.then(function() {
+					console.log("List successfully deleted");
+				})
+				.catch(function(error) {
+					this.error = error;
+				});
+		} else {
+			this.error = "Invalid ID";
+		}
+	},
+	addList: (title) => {
+		db.collection("Lists").add({ title: title, isCompleted: false });
 	},
 };

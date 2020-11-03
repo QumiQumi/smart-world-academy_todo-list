@@ -12,7 +12,7 @@
 
 
 		//- Список списков дел
-		.list-group.list-group-flush.mt-3.menu__list
+		.list-group.list-group-flush.mt-3.mb-auto.border-bottom.menu__list
 			a.list-group-item.list-group-item-action.d-flex.align-items-center(
 				type='button' 
 				v-for="list in this.$store.getters.getLists" 
@@ -20,24 +20,19 @@
 				font-awesome-icon.ml-auto.menu__delete-icon(icon="trash" data-toggle='modal' data-target='#deleteModal' @click="sendListToModal(list)")
 		
 		//- Нижняя часть
-		.menu__footer.mt-auto.d-flex.flex-column.align-items-center.mb-2
+		.menu__footer.d-flex.flex-column.align-items-center.mb-2
 			//- Поиск по спискам
 			input.form-control.mt-2(type="search" placeholder="Поиск по спискам" aria-label="Search" v-model="newList")
 
 			//- Кнопка добавления списка
-			button.btn.btn-primary.mt-2(type='button' @click="addList") Добавить список
+			button.btn.btn-primary.mt-2(type='button'  data-toggle='modal' data-target='#addListModal') Добавить список
 		
-		
-
 </template>
 
 <script>
-import { db } from "../../firebase";
-
 export default {
 	data: () => ({
 		Lists: [],
-		newList: "",
 		filters: [
 			{ filter: "all", text: "Все" },
 			{ filter: "completed", text: "Исполненные" },
@@ -45,26 +40,11 @@ export default {
 		],
 	}),
 	methods: {
-		async addList() {
-			let value = this.newList;
-			this.newList = "";
-			if (value) {
-				await db.collection("Lists").add({ title: value });
-			}
-		},
-		deleteList(id) {
-			db.collection("Lists")
-				.doc(id)
-				.delete();
-		},
 		sendListToModal(list) {
 			this.$store.dispatch("setItemToDelete", list);
 		},
 	},
-	// firestore: {
-	// 	Lists: db.collection("Lists"),
-	// },
-	components: {},
+
 	beforeCreate: function() {
 		this.$store.dispatch("setLists");
 	},
