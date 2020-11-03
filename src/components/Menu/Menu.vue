@@ -2,12 +2,15 @@
 	.sticky-top.d-flex.flex-column.align-items-center.menu
 
 		//- Фильтр
-		button#filter-lists.btn.dropdown-toggle.mt-2(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Dropdown
+		button#filter-lists.btn.dropdown-toggle.mt-2(
+			type='button' data-toggle='dropdown' 
+			aria-haspopup='true' aria-expanded='false') {{getFilterText(this.$store.state.filter)}}
 		.dropdown-menu(aria-labelledby='filter-lists')
 			button.dropdown-item(
 				type='button'
 				v-for="filter in filters"
 				:key="filter.filter"
+				@click="setFilter(filter.filter)"
 				) {{filter.text}}
 
 
@@ -22,7 +25,7 @@
 		//- Нижняя часть
 		.menu__footer.d-flex.flex-column.align-items-center.mb-2
 			//- Поиск по спискам
-			input.form-control.mt-2(type="search" placeholder="Поиск по спискам" aria-label="Search" v-model="newList")
+			input.form-control.mt-2(type="search" placeholder="Поиск по спискам" aria-label="Search")
 
 			//- Кнопка добавления списка
 			button.btn.btn-primary.mt-2(type='button'  data-toggle='modal' data-target='#addListModal') Добавить список
@@ -30,21 +33,36 @@
 </template>
 
 <script>
+import filters from "@/store/filters";
+
 export default {
+	name: "Menu",
 	data: () => ({
-		Lists: [],
-		filters: [
-			{ filter: "all", text: "Все" },
-			{ filter: "completed", text: "Исполненные" },
-			{ filter: "uncompleted", text: "Неисполненные" },
-		],
+		filters: filters,
 	}),
 	methods: {
 		sendListToModal(list) {
 			this.$store.dispatch("setItemToDelete", list);
+			console.log(this.$store.state.filter);
+			console.log(this.$store.getters.getFilter);
+		},
+		getFilterText(filter) {
+			// return filter.text;
+			switch (filter) {
+				case "SHOW_ALL":
+					return "Все";
+				case "SHOW_ACTIVE":
+					return "Неисполненные";
+				case "SHOW_COMPLETED":
+					return "Исполненные";
+				default:
+					return "Че это за фильтр";
+			}
+		},
+		setFilter(filter) {
+			this.$store.dispatch("setFilter", filter);
 		},
 	},
-
 	beforeCreate: function() {
 		this.$store.dispatch("setLists");
 	},
