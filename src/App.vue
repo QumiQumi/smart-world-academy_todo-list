@@ -25,11 +25,12 @@ export default {
 	components: {
 		MainLayout,
 	},
+	beforeCreate: function() {
+		this.$store.dispatch("setLists");
+	},
 };
 </script>
 <style>
 @import "~bootstrap/dist/css/bootstrap.min.css";
 </style>
-<style lang="scss">
-@import "./components/Menu/menu.scss";
-</style>
+

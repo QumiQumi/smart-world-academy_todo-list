@@ -1,10 +1,10 @@
 <template lang="pug">
-	.sticky-top.d-flex.flex-column.align-items-center.menu
+	.sticky-top.d-flex.flex-column.align-items-center.menu.border-right.border-left
 
 		//- Фильтр
 		button#filter-lists.btn.dropdown-toggle.mt-2(
 			type='button' data-toggle='dropdown' 
-			aria-haspopup='true' aria-expanded='false') {{getFilterText(this.$store.state.filter)}}
+			aria-haspopup='true' aria-expanded='false') {{filterText}}
 		.dropdown-menu(aria-labelledby='filter-lists')
 			button.dropdown-item(
 				type='button'
@@ -13,9 +13,8 @@
 				@click="setFilter(filter.filter)"
 				) {{filter.text}}
 
-
 		//- Список списков дел
-		.list-group.list-group-flush.mt-3.mb-auto.border-bottom.menu__list
+		.list-group.list-group-flush.mt-3.border-bottom.menu__list
 			a.list-group-item.list-group-item-action.d-flex.align-items-center(
 				type='button' 
 				v-for="list in this.$store.getters.getLists" 
@@ -23,32 +22,27 @@
 				font-awesome-icon.ml-auto.menu__delete-icon(icon="trash" data-toggle='modal' data-target='#deleteModal' @click="sendListToModal(list)")
 		
 		//- Нижняя часть
-		.menu__footer.d-flex.flex-column.align-items-center.mb-2
+		.menu__footer.d-flex.flex-column.align-items-center.mt-auto.border-top.w-100.p-2
 			//- Поиск по спискам
-			input.form-control.mt-2(type="search" placeholder="Поиск по спискам" aria-label="Search")
-
+			input.form-control.m-1(type="text" placeholder="Списочек" @keyup.enter="addList()" v-model="newList")
 			//- Кнопка добавления списка
-			button.btn.btn-primary.mt-2(type='button'  data-toggle='modal' data-target='#addListModal') Добавить список
-		
+			button.btn.btn-primary.m-1.w-100(type='button'  @click="addList()") Добавить список
 </template>
 
 <script>
 import filters from "@/store/filters";
+import { API } from "../../firebase";
 
 export default {
 	name: "Menu",
 	data: () => ({
+		newList: null,
 		filters: filters,
 	}),
-	methods: {
-		sendListToModal(list) {
-			this.$store.dispatch("setItemToDelete", list);
-			console.log(this.$store.state.filter);
-			console.log(this.$store.getters.getFilter);
-		},
-		getFilterText(filter) {
-			// return filter.text;
-			switch (filter) {
+
+	computed: {
+		filterText: function() {
+			switch (this.$store.state.filter) {
 				case "SHOW_ALL":
 					return "Все";
 				case "SHOW_ACTIVE":
@@ -59,12 +53,24 @@ export default {
 					return "Че это за фильтр";
 			}
 		},
+	},
+	methods: {
+		sendListToModal(list) {
+			this.$store.dispatch("setItemToDelete", list);
+		},
 		setFilter(filter) {
 			this.$store.dispatch("setFilter", filter);
 		},
-	},
-	beforeCreate: function() {
-		this.$store.dispatch("setLists");
+		async addList() {
+			let value = this.newList;
+			this.newList = "";
+			if (value) {
+				await API.addList(value);
+			}
+		},
 	},
 };
 </script>
+<style lang="scss">
+@import "./menu.scss";
+</style>

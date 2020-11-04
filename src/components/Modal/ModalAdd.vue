@@ -11,7 +11,7 @@
 					input.form-control.mt-2(type="text" placeholder="Списочек" aria-label="Search" v-model="newList")
 
 				.modal-footer
-					button.btn.btn-secondary(type='button' data-dismiss='modal') Отменить
+					button.btn.btn-secondary(type='button' data-dismiss='modal' @keyup.enter="onConfirm()"  ) Отменить
 					button.btn.btn-primary(type='button' @click="onConfirm()" ) Добавить список
 </template>
 

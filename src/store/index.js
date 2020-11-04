@@ -8,22 +8,22 @@ export default new Vuex.Store({
 	state: {
 		lists: null,
 		itemToDelete: {},
-		filter: "SHOW_ALL",
+		filter: "SHOW_ACTIVE",
 	},
 	getters: {
 		getLists: ({ lists, filter }) => {
-			console.log(filter);
-			switch (filter) {
-				case "SHOW_ALL":
-					return lists;
-				case "SHOW_COMPLETED": {
-					return lists.filter((list) => list.isCompleted);
+			if (lists)
+				switch (filter) {
+					case "SHOW_ALL":
+						return lists;
+					case "SHOW_COMPLETED": {
+						return lists.filter((list) => list.isCompleted);
+					}
+					case "SHOW_ACTIVE":
+						return lists.filter((list) => !list.isCompleted);
+					default:
+						throw new Error("Unknown filter: " + filter);
 				}
-				case "SHOW_ACTIVE":
-					return lists.filter((list) => !list.isCompleted);
-				default:
-					throw new Error("Unknown filter: " + filter);
-			}
 		},
 		getFilter: ({ filter }) => {
 			return filter;
