@@ -1,6 +1,6 @@
 <template lang="pug">
-	component(:is="layout")
-		div#app
+	div#app
+		component(:is="layout")
 			router-view
 
 </template>
@@ -19,7 +19,7 @@ export default {
 	methods: {},
 	computed: {
 		layout() {
-			return this.$route.meta.layout + "-layout";
+			return (this.$route.meta.layout || "main") + "-layout";
 		},
 	},
 	components: {
@@ -33,4 +33,3 @@ export default {
 <style>
 @import "~bootstrap/dist/css/bootstrap.min.css";
 </style>
-

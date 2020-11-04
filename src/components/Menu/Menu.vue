@@ -11,14 +11,17 @@
 				v-for="filter in filters"
 				:key="filter.filter"
 				@click="setFilter(filter.filter)"
+				
 				) {{filter.text}}
 
 		//- Список списков дел
-		.list-group.list-group-flush.mt-3.border-bottom.menu__list
-			a.list-group-item.list-group-item-action.d-flex.align-items-center(
-				type='button' 
-				v-for="list in this.$store.getters.getLists" 
-				:key="list.id") {{list.title}}
+		.list-group.list-group-flush.mt-3.menu__list
+			
+			router-link.list-group-item.list-group-item-action.d-flex.align-items-center(
+					:to="{name:'TodoList',params:{listId:list.id}}" 
+					v-for="list in this.$store.getters.getLists" 
+					:key="list.id"
+					) {{list.title}}
 				font-awesome-icon.ml-auto.menu__delete-icon(icon="trash" data-toggle='modal' data-target='#deleteModal' @click="sendListToModal(list)")
 		
 		//- Нижняя часть
