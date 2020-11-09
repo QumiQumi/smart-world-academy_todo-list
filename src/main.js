@@ -6,11 +6,11 @@ import "./firebase";
 import { firestorePlugin } from "vuefire";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faBolt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 //- Icons
-library.add(faTrash);
+library.add(faTrash, faBolt);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 //- DB

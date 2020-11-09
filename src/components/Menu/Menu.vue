@@ -21,6 +21,7 @@
 					:to="{name:'TodoList',params:{listId:list.id}}" 
 					v-for="list in this.$store.getters.getLists" 
 					:key="list.id"
+					v-on:click.native="setActiveList(list.id)"
 					) {{list.title}}
 				font-awesome-icon.ml-auto.menu__delete-icon(icon="trash" data-toggle='modal' data-target='#deleteModal' @click="sendListToModal(list)")
 		
@@ -63,6 +64,9 @@ export default {
 		},
 		setFilter(filter) {
 			this.$store.dispatch("setFilter", filter);
+		},
+		setActiveList(id) {
+			this.$store.dispatch("setActiveList", id);
 		},
 		async addList() {
 			let value = this.newList;

@@ -44,7 +44,52 @@ export const API = {
 			this.error = "Invalid ID";
 		}
 	},
-	addList: (title) => {
-		db.collection("Lists").add({ title: title, isCompleted: false });
+	addList: (value) => {
+		db.collection("Lists")
+			.add({ title: value, isCompleted: false, todos: [] })
+			.catch(function(error) {
+				this.error = error;
+			});
+	},
+	addTodo: (listId, title, isImmediate) => {
+		let list = db.collection("Lists").doc(listId);
+		list.update({
+			todos: firebase.firestore.FieldValue.arrayUnion({
+				title: title,
+				isImmediate: isImmediate,
+				isDone: false,
+				date: firebase.firestore.Timestamp.fromDate(new Date()),
+			}),
+		});
+	},
+	deleteTodo: (listId, index) => {
+		let newTodos = [];
+		db.collection("Lists")
+			.doc(listId)
+			.get()
+			.then((doc) => {
+				newTodos = doc.data().todos;
+				newTodos.splice(index, 1);
+				db.collection("Lists")
+					.doc(listId)
+					.update({
+						todos: newTodos,
+					});
+			});
+	},
+	toggleTodo: (listId, index) => {
+		let newTodos = [];
+		db.collection("Lists")
+			.doc(listId)
+			.get()
+			.then((doc) => {
+				newTodos = doc.data().todos;
+				newTodos[index].isDone = !newTodos[index].isDone;
+				db.collection("Lists")
+					.doc(listId)
+					.update({
+						todos: newTodos,
+					});
+			});
 	},
 };
