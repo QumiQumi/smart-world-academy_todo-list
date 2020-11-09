@@ -33,3 +33,6 @@ export default {
 <style>
 @import "~bootstrap/dist/css/bootstrap.min.css";
 </style>
+<style lang="scss">
+@import "./assets/style.scss";
+</style>

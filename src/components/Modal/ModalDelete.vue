@@ -27,12 +27,10 @@ export default {
 	methods: {
 		onConfirm() {
 			let itemToDelete = this.$store.state.itemToDelete;
+			let activeList = this.$store.state.activeList;
 			if (itemToDelete.isTodo)
-				API.deleteTodo(
-					this.$store.state.activeList.id,
-					itemToDelete.index
-				);
-			else API.deleteList(id);
+				API.deleteTodo(activeList.id, itemToDelete.index);
+			else API.deleteList(activeList.id);
 
 			$("#deleteModal").modal("hide");
 		},

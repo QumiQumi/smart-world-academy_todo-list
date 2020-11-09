@@ -1,5 +1,5 @@
 <template lang="pug">
-	.footer.mt-auto.border-top.d-flex.flex-wrap.align-items-center.justify-content-between.border-right.p-2
+	.footer.mt-auto.border-top.d-flex.flex-wrap.align-items-center.justify-content-between.p-2
 		.footer__input.m-1: input.form-control(type="text" placeholder="Сходить в магаз" @keyup.enter="addTodo()" v-model="newTodo")
 		.d-flex.flex-nowrap.align-items-center.input-group-text.mr-auto.border.border-warning.m-1
 			input#is-immediate(type='checkbox' aria-label='Checkbox for following text input' v-model="isImmediate") 

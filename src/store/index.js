@@ -24,7 +24,7 @@ export default new Vuex.Store({
 						throw new Error("Unknown filter: " + filter);
 				}
 		},
-		getList: ({ lists }, id) => {
+		getList: ({ lists }) => (id) => {
 			if (lists && id) return lists.find((list) => list.id == id);
 		},
 		getFilter: ({ filter }) => {
@@ -62,10 +62,18 @@ export default new Vuex.Store({
 				.onSnapshot((snapshot) => {
 					lists = [];
 					snapshot.forEach((doc) => {
+						let isCompleted = false;
+						if (doc.data().todos.length != 0)
+							isCompleted =
+								doc.data().todos.length ==
+								doc.data().todos.filter((todo) => todo.isDone)
+									.length
+									? true
+									: false;
 						let newList = {
 							id: doc.id,
 							title: doc.data().title,
-							isCompleted: doc.data().isCompleted,
+							isCompleted: isCompleted,
 							todos: doc.data().todos,
 						};
 						lists.push(newList);

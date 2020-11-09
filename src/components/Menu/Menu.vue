@@ -1,5 +1,5 @@
 <template lang="pug">
-	.sticky-top.d-flex.flex-column.align-items-center.menu.border-right.border-left
+	.sticky-top.d-flex.flex-column.align-items-center.menu.border-right
 
 		//- Фильтр
 		button#filter-lists.btn.dropdown-toggle.mt-2(
@@ -15,13 +15,15 @@
 				) {{filter.text}}
 
 		//- Список списков дел
-		.list-group.list-group-flush.mt-3.menu__list
+		.list-group.list-group-flush.mt-3.menu__list.border-top
 			
-			router-link.list-group-item.list-group-item-action.d-flex.align-items-center(
+			router-link.list-group-item.list-group-item-action.d-flex.align-items-center.border-bottom(
 					:to="{name:'TodoList',params:{listId:list.id}}" 
 					v-for="list in this.$store.getters.getLists" 
 					:key="list.id"
 					v-on:click.native="setActiveList(list.id)"
+					active-class="active-link"
+					v-bind:style="{'background-color': linkColor(list.id)}"
 					) {{list.title}}
 				font-awesome-icon.ml-auto.menu__delete-icon(icon="trash" data-toggle='modal' data-target='#deleteModal' @click="sendListToModal(list)")
 		
@@ -42,6 +44,11 @@ export default {
 	data: () => ({
 		newList: null,
 		filters: filters,
+		colors: {
+			white: "#ffffff",
+			green: "rgb(232, 255, 209)",
+			gray: "rgb(248, 248, 248)",
+		},
 	}),
 
 	computed: {
@@ -74,6 +81,16 @@ export default {
 			if (value) {
 				await API.addList(value);
 			}
+		},
+		linkColor(listId) {
+			let list = this.$store.getters.getList(listId);
+			if (list.todos.length == 0) return this.colors.white;
+			if (
+				list.todos.filter((todo) => todo.isDone).length ==
+				list.todos.length
+			)
+				return this.colors.gray;
+			else return this.colors.green;
 		},
 	},
 };

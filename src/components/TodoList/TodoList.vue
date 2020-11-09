@@ -3,9 +3,9 @@
 		.list-group.list-group-flush.m-1(v-if="$store.state.activeList")
 			.list-group-item.list-group-item-action.d-flex.align-items-center.border.border-primary.mt-2(
 				v-for="(todo, index) in todos"
-				@click="toggleTodo(index)"
+				
 			)
-				input(:id="'todo-'+index" type='checkbox' v-model="$store.getters.getTodoByIndex(index).isDone")
+				input(:id="'todo-'+index" type='checkbox' v-model="$store.getters.getTodoByIndex(index).isDone" @click="toggleTodo(index)")
 				label.m-0.ml-1(v-bind:for="'todo-'+index") {{todo.title}}	
 				.ml-auto
 					font-awesome-icon.ml-2.todo-list__bolt-icon.text-warning(icon="bolt" v-if="$store.getters.getTodoByIndex(index).isImmediate")
@@ -19,12 +19,6 @@ export default {
 	name: "TodoList",
 
 	computed: {
-		id() {
-			return this.$route.params.listId;
-		},
-		list() {
-			return this.$store.state.activeList;
-		},
 		todos() {
 			return this.$store.state.activeList.todos;
 		},
@@ -53,3 +47,6 @@ export default {
 	},
 };
 </script>
+<style lang="scss">
+@import "./todo-list.scss";
+</style>
