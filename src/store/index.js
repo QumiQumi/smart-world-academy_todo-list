@@ -57,6 +57,8 @@ export default new Vuex.Store({
 	mutations: {
 		setLists: (state) => {
 			let lists = [];
+			// регистрируем волшебный обработчик события обновления бд,
+			// при котором все данные обновляются
 			db.collection("Lists")
 				.orderBy("title")
 				.onSnapshot((snapshot) => {
@@ -81,12 +83,12 @@ export default new Vuex.Store({
 							state.activeList = newList;
 						}
 					});
-
 					state.lists = lists;
 				});
 		},
 		setActiveList: (state, id) => {
-			state.activeList = state.lists.find((list) => list.id == id);
+			if (state.lists)
+				state.activeList = state.lists.find((list) => list.id == id);
 		},
 		setFilter: (state, filter) => {
 			state.filter = filter;

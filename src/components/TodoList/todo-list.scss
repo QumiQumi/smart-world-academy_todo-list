@@ -1,4 +1,6 @@
 .todo-list {
+	overflow: auto;
+
 	&__delete-icon:hover {
 		color: gray;
 	}

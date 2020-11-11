@@ -3,7 +3,7 @@
 		.row
 			.col-4.p-0
 				Menu
-			.col-8.p-0.d-flex.flex-column
+			.col-8.p-0.d-flex.flex-column.main-content
 				router-view
 				Footer
 			ModalDelete
@@ -23,3 +23,6 @@ export default {
 	},
 };
 </script>
+<style lang="scss">
+@import url("./main-layout.scss");
+</style>

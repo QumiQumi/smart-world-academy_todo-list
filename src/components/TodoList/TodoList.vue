@@ -23,9 +23,10 @@ export default {
 			return this.$store.state.activeList.todos;
 		},
 	},
+
 	methods: {
 		todoDate(index) {
-			var options = {
+			let options = {
 				year: "numeric",
 				month: "numeric",
 				day: "numeric",
