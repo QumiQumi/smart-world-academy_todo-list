@@ -25,7 +25,7 @@ export default new Vuex.Store({
 				}
 		},
 		getList: ({ lists }) => (id) => {
-			if (lists && id) return lists.find((list) => list.id == id);
+			if (lists && id) return lists.find((list) => list.id === id);
 		},
 		getFilter: ({ filter }) => {
 			return filter;
@@ -79,7 +79,10 @@ export default new Vuex.Store({
 							todos: doc.data().todos,
 						};
 						lists.push(newList);
-						if (state.activeList && doc.id == state.activeList.id) {
+						if (
+							state.activeList &&
+							doc.id === state.activeList.id
+						) {
 							state.activeList = newList;
 						}
 					});
@@ -88,7 +91,7 @@ export default new Vuex.Store({
 		},
 		setActiveList: (state, id) => {
 			if (state.lists)
-				state.activeList = state.lists.find((list) => list.id == id);
+				state.activeList = state.lists.find((list) => list.id === id);
 		},
 		setFilter: (state, filter) => {
 			state.filter = filter;

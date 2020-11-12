@@ -1,5 +1,6 @@
 <template lang="pug">
-	h1 Кликай на лист и вперед!
+	.d-flex.align-items-center.justify-content-center.h-100
+		h1 Кликай на лист и вперед!
 </template>
 
 <script>

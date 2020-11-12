@@ -14,7 +14,7 @@ const firebaseConfig = {
 
 export const db = firebase.initializeApp(firebaseConfig).firestore();
 export const API = {
-	getLists: () => {
+	getLists: function() {
 		let lists = [];
 		db.collection("Lists")
 			.orderBy("title")
@@ -29,7 +29,7 @@ export const API = {
 		console.log(lists);
 		return lists;
 	},
-	deleteList: (id) => {
+	deleteList: function(id) {
 		if (id) {
 			db.collection("Lists")
 				.doc(id)
@@ -44,14 +44,14 @@ export const API = {
 			this.error = "Invalid ID";
 		}
 	},
-	addList: (value) => {
+	addList: function(value) {
 		db.collection("Lists")
 			.add({ title: value, isCompleted: false, todos: [] })
 			.catch(function(error) {
 				this.error = error;
 			});
 	},
-	addTodo: (listId, title, isImmediate) => {
+	addTodo: function(listId, title, isImmediate) {
 		let list = db.collection("Lists").doc(listId);
 		list.update({
 			todos: firebase.firestore.FieldValue.arrayUnion({
@@ -62,7 +62,7 @@ export const API = {
 			}),
 		});
 	},
-	deleteTodo: (listId, index) => {
+	deleteTodo: function(listId, index) {
 		let newTodos = [];
 		db.collection("Lists")
 			.doc(listId)
@@ -77,7 +77,7 @@ export const API = {
 					});
 			});
 	},
-	toggleTodo: (listId, index) => {
+	toggleTodo: function(listId, index) {
 		let newTodos = [];
 		db.collection("Lists")
 			.doc(listId)

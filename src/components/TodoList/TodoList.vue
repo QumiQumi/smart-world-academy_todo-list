@@ -11,7 +11,8 @@
 					font-awesome-icon.ml-2.todo-list__bolt-icon.text-warning(icon="bolt" v-if="$store.getters.getTodoByIndex(index).isImmediate")
 					span.ml-2 {{todoDate(index)}}
 					font-awesome-icon.ml-3.todo-list__delete-icon(icon="trash" data-toggle='modal' data-target='#deleteModal' @click="sendTodoToModal(index,todo.title, isTodo=true)" )
-		h1(v-else) Выбери лист
+		.d-flex.align-items-center.justify-content-center.h-100(v-else)
+			h1 Кликай на лист и вперед!
 			
 </template>
 <script>

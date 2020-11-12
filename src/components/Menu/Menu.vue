@@ -84,9 +84,9 @@ export default {
 		},
 		linkColor(listId) {
 			let list = this.$store.getters.getList(listId);
-			if (list.todos.length == 0) return this.colors.white;
+			if (list.todos.length === 0) return this.colors.white;
 			if (
-				list.todos.filter((todo) => todo.isDone).length ==
+				list.todos.filter((todo) => todo.isDone).length ===
 				list.todos.length
 			)
 				return this.colors.gray;
